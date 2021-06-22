@@ -9,7 +9,29 @@ const connection = mysql.createConnection({
     database: 'employeeDB',
 });
 
+const viewEmployees = () => {
+    connection.query('SELECT * FROM employee', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+    init();
+};
 
+const viewRoles = () => {
+    connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+    init();
+};
+
+const viewDepartments = () => {
+    connection.query('SELECT * FROM department', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+    init();
+};
 
 const init = () => {
     inquirer.prompt([
@@ -18,44 +40,44 @@ const init = () => {
             message: "What would you like to do?",
             name: "choice",
             choices: [
-                "Add employee.",
-                "Add role.",
-                "Add department.",
+                // "Add employee.",
+                // "Add role.",
+                // "Add department.",
                 "View employees.",
-                "View employee's by role.",
-                "View emplyees by deparment.",
-                "Update employee."
+                "View roles.",
+                "View deparments.",
+                // "Update employee."
             ]
         }
     ]).then((answer) => {
         switch (answer.choice) {
-            case "Add employee.":
-                addEmployee();
-                break;
+            // case "Add employee.":
+            //     addEmployee();
+            //     break;
 
-            case "Add role.":
-                addRole();
-                break;
+            // case "Add role.":
+            //     addRole();
+            //     break;
 
-            case "Add department.":
-                addDepartment();
-                break;
+            // case "Add department.":
+            //     addDepartment();
+            //     break;
 
             case "View employees.":
                 viewEmployees();
                 break;
 
-            case "View employee's by role.":
+            case "View roles.":
                 viewRoles();
                 break;
 
-            case "View emplyees by deparment.":
+            case "View deparments.":
                 viewDepartments();
                 break;
 
-            case "Update employee.":
-                updateEmployee();
-                break;
+            // case "Update employee.":
+            //     updateEmployee();
+            //     break;
 
         };
     });
@@ -64,6 +86,5 @@ const init = () => {
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`connected as id ${connection.threadId}`);
     init();
 });
